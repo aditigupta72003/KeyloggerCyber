@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        .clipboard-content {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .clipboard{
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .clipboard-email{
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clipboard Content</h1>
+    <div id="clipboard-content" class="clipboard-content">
+        {% for item in clipboard_content %}
+            <div>{{ item }}</div>
+        {% endfor %}
+    </div>
+    <button class="clipboard" onclick="downloadPDF()">Download PDF</button>
+    <button class="clipboard-email" onclick="emailsend()">Send Email</button>
+    <script>
+        function downloadPDF() {
+            window.location.href = '/download_pdf';
+        }
+
+        function emailsend() {
+            window.location.href = '/send_email';
+        }
+    </script>
+</body>
+</html>
